@@ -19,6 +19,8 @@ import Copyright from '../../components/Copyright';
 const RegistrationPage: React.FC = () => {
 
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [smuNo, setSmuNo] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [LastName, setLastName] = useState('');
@@ -31,7 +33,7 @@ const RegistrationPage: React.FC = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     // Add your registration logic here
-    AuthService.signUp(firstName, LastName, email, password).then(
+    AuthService.signUp(firstName, LastName, email, username, smuNo, password).then(
       () => {
         navigate('/login');
         window.location.reload();
@@ -91,6 +93,30 @@ const RegistrationPage: React.FC = () => {
                 name="lastName"
                 autoComplete="family-name"
                 onChange={(e) => setLastName(e.target.value)} value={LastName}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                onChange={(e) => setUsername(e.target.value)} value={username}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="smuNo"
+                label="SMU Number"
+                name="smuNo"
+                autoComplete="smuNo"
+                // inputProps={{ min: 0, inputMode: 'numeric', pattern: '[0-9]*' }}
+                onChange={(e) => setSmuNo(e.target.value)}
+                value={smuNo}
               />
             </Grid>
             <Grid item xs={12}>
