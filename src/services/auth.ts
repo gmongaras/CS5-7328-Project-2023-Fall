@@ -74,32 +74,37 @@ const getCurrentUser = () => {
  * @returns 
  */
 
-const resetPasswordRequest = (email: string) => {
-  return axios.post(BASE_API_URL + 'password-reset-link', {
-    email,
-  }).then(response => {
-    // Handle success - maybe show a success message to the user
-    console.log(response.data);
-  }).catch(error => {
-    // Handle error - show an error message to the user
-    console.error('Error sending reset email:', error);
-  });
+//send reset password email link
+const sendResetLink = (email: string) => { //, old_password: string, new_password: string) => {
+  return axios
+    .post(BASE_API_URL + 'password-reset-link', {
+      'email': email
+    })
+    .then((response) => {
+      // alert(JSON.stringify(response.data)); // for debugging purposes
+      if (response.data.user) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
+
+      return response.data;
+    });
 };
 
-/**
- * For Handling User Reset Password request
- * @param token 
- * @param password 
- * @returns 
- */
-const resetPassword = async (token: string, password: string) => {
-  try {
-    const response = await axios.post(BASE_API_URL+'password-reset/confirm', { token, password });
-    return response.data.message;
-  } catch (error) {
-    console.error(error);
-    throw new Error('Error resetting password. Please try again later.');
-  }
+//reset password
+const set_new_password = (token: string | undefined, password: string) => {
+  return axios
+    .post(BASE_API_URL + 'password-reset/confirm', {
+      'token': token,
+      'password': password,
+    })
+    .then((response) => {
+      alert(JSON.stringify(response.data)); // for debugging purposes
+      if (response.data.user) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
+
+      return response.data;
+    });
 };
 
 
@@ -124,8 +129,8 @@ const AuthService = {
   login,
   logout,
   getCurrentUser,
-  resetPassword,
-  resetPasswordRequest,
+  sendResetLink,
+  set_new_password,
   fakeAuthProvider,
 };
   
