@@ -16,8 +16,9 @@ import AuthService from '../../services/auth';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../../components/Copyright';
-const RegistrationPage: React.FC = () => {
+import { AxiosError } from 'axios';
 
+const RegistrationPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [smuNo, setSmuNo] = useState('');
@@ -38,14 +39,19 @@ const RegistrationPage: React.FC = () => {
         navigate('/login');
         window.location.reload();
       },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
+      (error: AxiosError | Error) => {
+        // Test commit
+        let resMessage;
+        if (error instanceof AxiosError) {
+          resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+        } else {
+          resMessage = error.message || 'An error occurred';
+        }
         setLoading(false);
         setMessage(resMessage);
       }
@@ -81,7 +87,8 @@ const RegistrationPage: React.FC = () => {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                onChange={(e) => setFirstName(e.target.value)} value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                value={firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -92,7 +99,8 @@ const RegistrationPage: React.FC = () => {
                 label="Last Name"
                 name="lastName"
                 autoComplete="family-name"
-                onChange={(e) => setLastName(e.target.value)} value={LastName}
+                onChange={(e) => setLastName(e.target.value)}
+                value={LastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -127,7 +135,8 @@ const RegistrationPage: React.FC = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={(e) => setEmail(e.target.value)} value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -139,7 +148,8 @@ const RegistrationPage: React.FC = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
-                onChange={(e) => setPassword(e.target.value)} value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
             </Grid>
             <Grid item xs={12}>
