@@ -5,6 +5,7 @@ import PasswordResetPage from './pages/login/PasswordReset';
 import LoginPage from './pages/login/LoginPage';
 import UserProfile from './pages/user/Profile';
 import SignUpPage from './pages/login/SignUpPage';
+import UserDataPage from './pages/user/UserDataPage';
 import Home from './pages/Home';
 import './stylesheets/App.css';
 // import { fakeAuthProvider } from "./auth";
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         <Route path="/password-reset/:token" element={<PasswordResetPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/userdatapage" element={<UserDataPage />} />
         <Route path="*" element={<LoginPage />} />
       </Routes>
     </Router>
