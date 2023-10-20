@@ -120,6 +120,17 @@ const fakeAuthProvider = {
 };
 
 /**
+ * This represents some generic user table API, like Firebase.
+ */
+const userTable = {
+  getUser(username: string) {
+    return axios.get(USER_API_URL + username).then((response) => {
+      return response.data;
+    });
+  },
+};
+
+/**
  * Making the AuthService object available
  */
 const AuthService = {
@@ -130,20 +141,12 @@ const AuthService = {
   resetPassword,
   resetPasswordRequest,
   fakeAuthProvider,
+  userTable,
 };
 
 /**
  * Data structure for User object
  */
-export interface UserTable {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
-  smuNo: string;
-  password: string;
-}
 // type (faculty, student)
 // if student
 // status: drop-down (freshman, MS 1st year, etc)
