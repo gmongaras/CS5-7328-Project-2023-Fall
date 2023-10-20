@@ -3,17 +3,26 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { DataGrid } from '@mui/x-data-grid';
-// import { useDemoData } from '@mui/x-data-grid-generator';
+import AuthService from '../../services/auth';
 const UserDataPage: React.FC = () => {
   const [nbRows, setNbRows] = React.useState(3);
   const removeRow = () => setNbRows((x) => Math.max(0, x - 1));
   const addRow = () => setNbRows((x) => Math.min(100, x + 1));
 
-  const { data } = useDemoData({
-    dataSet: 'Commodity',
-    rowLength: 100,
-    maxColumns: 6,
-  });
+  const dummyData = [
+    { id: 1, firstName: 'John', lastName: 'Doe', age: 30 },
+    { id: 2, firstName: 'Jane', lastName: 'Smith', age: 25 },
+    { id: 3, firstName: 'Bob', lastName: 'Johnson', age: 40 },
+    // Add more rows as needed
+  ];
+
+  // dummy data table
+  const {data} = [
+    { id: 1, firstName: 'John', lastName: 'Doe', age: 30 },
+    { id: 2, firstName: 'Jane', lastName: 'Smith', age: 25 },
+    { id: 3, firstName: 'Bob', lastName: 'Johnson', age: 40 },
+    // Add more rows as needed
+  ];
 
   return (
     <Box sx={{ width: '100%' }}>

@@ -14,6 +14,7 @@ const USER_API_URL: string | undefined = process.env.REACT_APP_BACKEND_URL+'/use
  * @param password 
  * @returns 
  */
+
 const signUp = (firstName: string, lastName: string, email: string, username:string, smuNo:string, password: string) => {
   return axios.post(USER_API_URL + 'signup', {
     firstName,
@@ -118,7 +119,9 @@ const fakeAuthProvider = {
   },
 };
 
-
+/**
+ * Making the AuthService object available
+ */
 const AuthService = {
   signUp,
   login,
@@ -128,5 +131,28 @@ const AuthService = {
   resetPasswordRequest,
   fakeAuthProvider,
 };
+
+/**
+ * Data structure for User object
+ */
+export interface UserTable {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  smuNo: string;
+  password: string;
+}
+// type (faculty, student)
+// if student
+// status: drop-down (freshman, MS 1st year, etc)
+// Whether international student
+// first name
+// last name
+// user id
+// password
+// email
+// phone number
   
 export default AuthService;
