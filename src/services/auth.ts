@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { REACT_APP_BACKEND_URL } from './constants';
 
-const BASE_API_URL: string | undefined = process.env.REACT_APP_BACKEND_URL+'/api/';
-const USER_API_URL: string | undefined = process.env.REACT_APP_BACKEND_URL+'/user/';
+const BASE_API_URL: string | undefined = REACT_APP_BACKEND_URL+'/api/';
+const USER_API_URL: string | undefined = REACT_APP_BACKEND_URL+'/user/';
 // const USER_API_URL = "https://9429d5b9-a4ce-43d8-bf6b-637cc223febe.mock.pstmn.io/";
 
 /**
@@ -119,16 +120,7 @@ const fakeAuthProvider = {
   },
 };
 
-/**
- * This represents some generic user table API, like Firebase.
- */
-const userTable = {
-  getUser(username: string) {
-    return axios.get(USER_API_URL + username).then((response) => {
-      return response.data;
-    });
-  },
-};
+
 
 /**
  * Making the AuthService object available
@@ -141,7 +133,6 @@ const AuthService = {
   resetPassword,
   resetPasswordRequest,
   fakeAuthProvider,
-  userTable,
 };
 
 /**

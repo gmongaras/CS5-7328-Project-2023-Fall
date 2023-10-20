@@ -1,14 +1,15 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import AuthService from '../../services/auth';
-import { useParams } from 'react-router-dom';
+import userService from '../../services/userQuery';
 import { Button, TextField, Typography, Container, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Axios from 'axios';
 
 
 // Note to self: use Collapsible table next time: https://mui.com/components/data-grid/rendering/#collapsible-table
 const UserDataPage: React.FC = () => {
+  //eslint-disable-next-line
+  const [rows, setRows] = useState<any[]>([]);
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'Order', description: 'Order of Creation', width: 70 },
     { field: 'firstName', headerName: 'First name', width: 130 },
@@ -48,21 +49,26 @@ const UserDataPage: React.FC = () => {
     },
   ];
 
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', smuId: 35, password: 'password', email: 'a', phone: 'b' },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', smuId: 42, password: 'password', email: 'a', phone: 'b'},
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', smuId: 45, password: 'password', email: 'a', phone: 'b'},
-    { id: 4, lastName: 'Stark', firstName: 'Arya', smuId: 16 , password: 'password', email: 'a', phone: 'b'},
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', smuId: null, password: 'password', email: 'a', phone: 'b'},
-    { id: 6, lastName: 'Melisandre', firstName: null, smuId: 150, password: 'password', email: 'a', phone: 'b'},
 
-  ];
+  // Load all user data from the backend when the component mounts
+  useEffect(() => {
+    const getAllUserData = async () => {
+      try {
+        const response = await userService.getAllUsersData();
+        setRows(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getAllUserData(); // Call the function to load data
+  }, []); // Empty dependency array ensures this effect runs once on component mount
+
   
-  // grab user data from backend using axios and set rows and columns
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '00px'}}>
+      <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '00px' }}>
         <Typography component="h1" variant="h5">
           User Data
         </Typography>
